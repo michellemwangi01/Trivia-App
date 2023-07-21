@@ -3,31 +3,26 @@ import React, { useEffect, useState } from "react";
 function Question({ question, onAnswered }) {
   const [timeRemaining, setTimeRemaining] = useState(10);
 
-  // add useEffect code
-  useEffect(()=>{
+  useEffect(() => {
     let timeoutID;
 
-    const countDown = ()=>{
-      setTimeRemaining((prevTime)=>{
-        if(prevTime === 0){
-          onAnswered(false)
-          console.log(onAnswered);
-          return 10
+    const countDown = () => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime === 1) {
+          onAnswered(false);
+          return 10;
+        } else {
+          return prevTime - 1;
         }
-        else{
-          return prevTime -1
-        }
-  
-       })
-  
-      }
-    timeoutID = setTimeout(countDown, 1000)
-    //countDown()
-   
-    return function cleanup(){
-      clearTimeout(timeoutID)
-    }
-  ,[onAnswered]})
+      });
+    };
+
+    timeoutID = setTimeout(countDown, 1000);
+
+    return function cleanup() {
+      clearTimeout(timeoutID);
+    };
+  }, [timeRemaining]); 
 
   function handleAnswer(isCorrect) {
     setTimeRemaining(10);
@@ -54,17 +49,3 @@ function Question({ question, onAnswered }) {
 }
 
 export default Question;
-
-    // const timeoutID = setTimeout(()=>{
-    //  setTimeRemaining((prevTime)=>{
-    //   if(prevTime === 0){
-    //     onAnswered(false)
-    //     return 10
-    //   }
-    //   else{
-    //     return prevTime -1
-    //   }
-
-    //  })
-
-    // },1000)
